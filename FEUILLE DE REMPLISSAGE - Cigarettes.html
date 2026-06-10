@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bon de Commande Numérique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 30px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-size: 26px;
+            border-bottom: 3px solid #cbd5e1;
+            padding-bottom: 15px;
+        }
+        .config-block {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        label {
+            font-weight: bold;
+            color: #334155;
+            font-size: 15px;
+        }
+        select {
+            padding: 10px 16px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            background-color: #fff;
+            outline: none;
+            min-width: 150px;
+            cursor: pointer;
+        }
+        .email-display {
+            font-weight: 500;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #0284c7;
+        }
+        .action-bar {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 12px;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-uncheck {
+            background-color: #64748b;
+            color: white;
+        }
+        .btn-uncheck:hover {
+            background-color: #475569;
+        }
+        .btn-send {
+            background-color: #16a34a;
+            color: white;
+            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.2);
+        }
+        .btn-send:hover {
+            background-color: #15803d;
+        }
+        .manufacturer-section {
+            background-color: #1e293b;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 12px 15px;
+            margin-top: 35px;
+            margin-bottom: 0;
+            border-radius: 4px 4px 0 0;
+            letter-spacing: 0.5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: bold;
+        }
+        /* Une ligne coloriée sur deux */
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        /* Mise en évidence de la ligne entière au survol */
+        tbody tr:hover {
+            background-color: #bae6fd !important;
+        }
+        td.product-name {
+            text-align: left;
+            font-weight: 500;
+            width: 32%;
+            padding-left: 15px;
+        }
+        .header-top-row {
+            background-color: #e2e8f0;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        input[type="checkbox"]:disabled {
+            opacity: 0.15;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bon de Commande & Liste de Produits</h1>
+
+    <div class="config-block">
+        <label for="siteSelect">Sélectionner le numéro de site :</label>
+        <select id="siteSelect" onchange="updateEmailAddress()">
+            <option value="1522@depanneursprint.ca">1522</option>
+            <option value="1730@depanneursprint.ca">1730</option>
+            <option value="1732@depanneursprint.ca">1732</option>
+            <option value="1733@depanneursprint.ca">1733</option>
+            <option value="1735@depanneursprint.ca">1735</option>
+            <option value="1740@depanneursprint.ca">1740</option>
+            <option value="1745@depanneursprint.ca">1745</option>
+            <option value="1747@depanneursprint.ca">1747</option>
+            <option value="1748@depanneursprint.ca">1748</option>
+            <option value="1752@depanneursprint.ca">1752</option>
+            <option value="1753@depanneursprint.ca">1753</option>
+            <option value="1754@depanneursprint.ca">1754</option>
+            <option value="1755@depanneursprint.ca">1755</option>
+            <option value="1756@depanneursprint.ca">1756</option>
+            <option value="1757@depanneursprint.ca">1757</option>
+            <option value="1758@depanneursprint.ca">1758</option>
+            <option value="1759@depanneursprint.ca">1759</option>
+            <option value="1760@depanneursprint.ca">1760</option>
+            <option value="1761@depanneursprint.ca">1761</option>
+            <option value="1762@depanneursprint.ca">1762</option>
+            <option value="1769@depanneursprint.ca">1769</option>
+            <option value="1771@depanneursprint.ca">1771</option>
+            <option value="1773@depanneursprint.ca">1773</option>
+            <option value="1774@depanneursprint.ca">1774</option>
+            <option value="1775@depanneursprint.ca">1775</option>
+            <option value="1777@depanneursprint.ca">1777</option>
+            <option value="1778@depanneursprint.ca">1778</option>
+            <option value="1780@depanneursprint.ca">1780</option>
+            <option value="1781@depanneursprint.ca">1781</option>
+            <option value="1782@depanneursprint.ca">1782</option>
+            <option value="1783@depanneursprint.ca">1783</option>
+            <option value="1784@depanneursprint.ca">1784</option>
+            <option value="1787@depanneursprint.ca">1787</option>
+            <option value="1789@depanneursprint.ca">1789</option>
+            <option value="1801@depanneursprint.ca">1801</option>
+            <option value="1802@depanneursprint.ca">1802</option>
+            <option value="1803@depanneursprint.ca">1803</option>
+            <option value="1809@depanneursprint.ca">1809</option>
+            <option value="1813@depanneursprint.ca">1813</option>
+            <option value="1816@depanneursprint.ca">1816</option>
+            <option value="1817@depanneursprint.ca">1817</option>
+            <option value="1818@depanneursprint.ca">1818</option>
+            <option value="1819@depanneursprint.ca">1819</option>
+            <option value="1820@depanneursprint.ca">1820</option>
+            <option value="1825@depanneursprint.ca">1825</option>
+            <option value="1826@depanneursprint.ca">1826</option>
+            <option value="1827@depanneursprint.ca">1827</option>
+            <option value="5006@depanneursprint.ca">5006</option>
+            <option value="5013@depanneursprint.ca">5013</option>
+            <option value="5014@depanneursprint.ca">5014</option>
+            <option value="5015@depanneursprint.ca">5015</option>
+            <option value="5016@depanneursprint.ca">5016</option>
+            <option value="5021@depanneursprint.ca">5021</option>
+            <option value="5025@depanneursprint.ca">5025</option>
+            <option value="5026@depanneursprint.ca">5026</option>
+            <option value="5028@depanneursprint.ca">5028</option>
+            <option value="5030@depanneursprint.ca">5030</option>
+            <option value="5032@depanneursprint.ca">5032</option>
+            <option value="5033@depanneursprint.ca">5033</option>
+            <option value="5035@depanneursprint.ca">5035</option>
+            <option value="5041@depanneursprint.ca">5041</option>
+            <option value="5042@depanneursprint.ca">5042</option>
+            <option value="5049@depanneursprint.ca">5049</option>
+            <option value="5060@depanneursprint.ca">5060</option>
+            <option value="5067@depanneursprint.ca">5067</option>
+            <option value="5068@depanneursprint.ca">5068</option>
+            <option value="5069@depanneursprint.ca">5069</option>
+            <option value="5071@depanneursprint.ca">5071</option>
+            <option value="5076@depanneursprint.ca">5076</option>
+            <option value="5077@depanneursprint.ca">5077</option>
+            <option value="5079@depanneursprint.ca">5079</option>
+            <option value="5080@depanneursprint.ca">5080</option>
+            <option value="5082@depanneursprint.ca">5082</option>
+            <option value="5085@depanneursprint.ca">5085</option>
+            <option value="5086@depanneursprint.ca">5086</option>
+            <option value="5090@depanneursprint.ca">5090</option>
+            <option value="5091@depanneursprint.ca">5091</option>
+            <option value="5096@depanneursprint.ca">5096</option>
+            <option value="5460@depanneursprint.ca">5460</option>
+            <option value="5461@depanneursprint.ca">5461</option>
+            <option value="5462@depanneursprint.ca">5462</option>
+            <option value="5463@depanneursprint.ca">5463</option>
+            <option value="5464@depanneursprint.ca">5464</option>
+            <option value="5472@depanneursprint.ca">5472</option>
+            <option value="5474@depanneursprint.ca">5474</option>
+            <option value="5480@depanneursprint.ca">5480</option>
+            <option value="5481@depanneursprint.ca">5481</option>
+            <option value="5483@depanneursprint.ca">5483</option>
+            <option value="5484@depanneursprint.ca">5484</option>
+            <option value="5486@depanneursprint.ca">5486</option>
+            <option value="5487@depanneursprint.ca">5487</option>
+            <option value="5500@depanneursprint.ca">5500</option>
+            <option value="5502@depanneursprint.ca">5502</option>
+            <option value="5504@depanneursprint.ca">5504</option>
+            <option value="5505@depanneursprint.ca">5505</option>
+            <option value="5506@depanneursprint.ca">5506</option>
+            <option value="5507@depanneursprint.ca">5507</option>
+            <option value="5508@depanneursprint.ca">5508</option>
+            <option value="5510@depanneursprint.ca">5510</option>
+            <option value="5511@depanneursprint.ca">5511</option>
+            <option value="5512@depanneursprint.ca">5512</option>
+            <option value="5513@depanneursprint.ca">5513</option>
+            <option value="5515@depanneursprint.ca">5515</option>
+            <option value="5516@depanneursprint.ca">5516</option>
+            <option value="5519@depanneursprint.ca">5519</option>
+            <option value="5521@depanneursprint.ca">5521</option>
+            <option value="5523@depanneursprint.ca">5523</option>
+            <option value="5524@depanneursprint.ca">5524</option>
+            <option value="5526@depanneursprint.ca">5526</option>
+            <option value="5527@depanneursprint.ca">5527</option>
+            <option value="5528@depanneursprint.ca">5528</option>
+            <option value="5529@depanneursprint.ca">5529</option>
+            <option value="5530@depanneursprint.ca">5530</option>
+            <option value="5531@depanneursprint.ca">5531</option>
+            <option value="5532@depanneursprint.ca">5532</option>
+            <option value="5533@depanneursprint.ca">5533</option>
+            <option value="5534@depanneursprint.ca">5534</option>
+            <option value="5535@depanneursprint.ca">5535</option>
+            <option value="5536@depanneursprint.ca">5536</option>
+            <option value="5537@depanneursprint.ca">5537</option>
+            <option value="5538@depanneursprint.ca">5538</option>
+            <option value="5539@depanneursprint.ca">5539</option>
+            <option value="5540@depanneursprint.ca">5540</option>
+            <option value="5541@depanneursprint.ca">5541</option>
+            <option value="dbolduc@groupefdufresne.ca">TEST</option>
+        </select>
+        <div class="email-display" id="emailDisplay">Courriel associé : 1522@depanneursprint.ca.</div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn-uncheck" onclick="clearAllCheckboxes()">Tout décocher</button>
+        <button class="btn-send" onclick="generateAndSendEmail()">Envoyer la commande automatiquement</button>
+    </div>
+
+    
+    <div class="manufacturer-section">ITL</div>
+    <table>
+        <thead>
+            <tr class="header-top-row">
+                <th rowspan="2">Marque / Produit</th>
+                <th colspan="2">20</th>
+                <th colspan="2">25</th>
+                <th colspan="2">40</th>
+                <th colspan="2">50</th>
+            </tr>
+            <tr>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="product-name">du Maurier Distinct Plus</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Distinct Plus" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Distinct Plus" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Distinct Plus" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">du Maurier Distinct</td>
+                <td><input type="checkbox" data-product="du Maurier Distinct" data-format="20 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Distinct" data-format="25 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Distinct" data-format="50 RG"></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">du Maurier Signature</td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="du Maurier Signature" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">du Maurier Subtil</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Subtil" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="du Maurier Subtil" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">du Maurier Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="du Maurier Velouté" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="du Maurier Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="du Maurier Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">John Player Québec</td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="25 KS"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="40 RG"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="40 KS"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="John Player Québec" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">John Player Riche</td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="25 KS"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="40 RG"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="40 KS"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="John Player Riche" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">John Player Velouté</td>
+                <td><input type="checkbox" data-product="John Player Velouté" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="John Player Velouté" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="John Player Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="John Player Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro Original</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Original" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Original" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Original" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro Plus</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Plus" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Plus" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro Riche</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="40 KS"></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Marlboro Riche" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro Sélect</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Sélect" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Marlboro Sélect" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Marlboro Sélect" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Sélect" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Marlboro Sélect" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Marlboro Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Velouté" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Velouté" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Marlboro Velouté" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Matinée</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Matinée" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Matinée" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Matinée Subtile</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Matinée Subtile" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Matinée Veloutée</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Matinée Veloutée" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Pall Mall Corsée Extra</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée Extra" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée Extra" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée Extra" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée Extra" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Pall Mall Corsée</td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="40 KS"></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Corsée" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Pall Mall Originale</td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Originale" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Pall Mall Veloutée Extra</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée Extra" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée Extra" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée Extra" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée Extra" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Pall Mall Veloutée</td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="40 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Pall Mall Veloutée" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Player's Original</td>
+                <td><input type="checkbox" data-product="Player's Original" data-format="20 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Player's Original" data-format="25 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Player's Riche</td>
+                <td><input type="checkbox" data-product="Player's Riche" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Player's Riche" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Player's Riche" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Player's Riche" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Player's Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Player's Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Player's Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Viceroy Original</td>
+                <td><input type="checkbox" data-product="Viceroy Original" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Viceroy Original" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Viceroy Original" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Viceroy Original" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Viceroy Velouté</td>
+                <td><input type="checkbox" data-product="Viceroy Velouté" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Viceroy Velouté" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Viceroy Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Viceroy Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="manufacturer-section">JTI</div>
+    <table>
+        <thead>
+            <tr class="header-top-row">
+                <th rowspan="2">Marque / Produit</th>
+                <th colspan="2">20</th>
+                <th colspan="2">25</th>
+                <th colspan="2">40</th>
+                <th colspan="2">50</th>
+            </tr>
+            <tr>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="product-name">American Spirit</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="American Spirit" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">American Spirit Corsé</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="American Spirit Corsé" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Camel Original</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Original" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Original" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Camel Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Velouté" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Camel Sélect</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Sélect" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Camel Riche</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Camel Riche" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Winston Original</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Winston Original" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Export A Plein</td>
+                <td><input type="checkbox" data-product="Export A Plein" data-format="20 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Export A Plein" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Export A Plein" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Export A Medium</td>
+                <td><input type="checkbox" data-product="Export A Medium" data-format="20 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Export A Medium" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Export A Medium" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Export A Medium" data-format="50 RG"></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Export A Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Export A Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Export A Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Export A Fin</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Export A Fin" data-format="25 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Macdonald Subtil</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Macdonald Subtil" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Macdonald Original</td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="40 KS"></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Original" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Macdonald Velouté</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Macdonald Velouté" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Velouté" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Macdonald Medium</td>
+                <td><input type="checkbox" data-product="Macdonald Medium" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Medium" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Macdonald Medium" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Macdonald Medium" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">LD Standard Corsé</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Standard Corsé" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="LD Standard Corsé" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="LD Standard Corsé" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Standard Corsé" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="LD Standard Corsé" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">LD Standard Medium</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Standard Medium" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Standard Medium" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">LD Corsé</td>
+                <td><input type="checkbox" data-product="LD Corsé" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="LD Corsé" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="LD Corsé" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="LD Corsé" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">LD Medium</td>
+                <td><input type="checkbox" data-product="LD Medium" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="LD Medium" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="LD Medium" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="LD Medium" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">LD Menthol</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Menthol" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="LD Menthol" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="manufacturer-section">RBH</div>
+    <table>
+        <thead>
+            <tr class="header-top-row">
+                <th rowspan="2">Marque / Produit</th>
+                <th colspan="2">20</th>
+                <th colspan="2">25</th>
+                <th colspan="2">40</th>
+                <th colspan="2">50</th>
+            </tr>
+            <tr>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+                <th>RG</th><th>KS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="product-name">Belvedere Extra Plus</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Belvedere Extra Plus" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Benson & Hedges Noir</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Noir" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Noir" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Benson & Hedges Argent</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Argent" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Argent" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Benson & Hedges Classique</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Classique" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Classique" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Benson & Hedges Or</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Or" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Benson & Hedges Or" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Canadian Classics Argent</td>
+                <td><input type="checkbox" data-product="Canadian Classics Argent" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Argent" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Argent" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Argent" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Canadian Classics Original</td>
+                <td><input type="checkbox" data-product="Canadian Classics Original" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Original" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Original" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Canadian Classics Original" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Next Bleu</td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Next Bleu" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Next Rouge</td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="50 RG"></td>
+                <td><input type="checkbox" data-product="Next Rouge" data-format="50 KS"></td>
+            </tr>
+            <tr>
+                <td class="product-name">Next Doré</td>
+                <td><input type="checkbox" data-product="Next Doré" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Next Doré" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Next Doré" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Next Doré" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Philip Morris Bleu</td>
+                <td><input type="checkbox" data-product="Philip Morris Bleu" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Philip Morris Bleu" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Philip Morris Bleu" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Philip Morris Bleu" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Philip Morris Spécial</td>
+                <td><input type="checkbox" data-product="Philip Morris Spécial" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Philip Morris Spécial" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Philip Morris Spécial" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Philip Morris Spécial" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Quebec Classique</td>
+                <td><input type="checkbox" data-product="Quebec Classique" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Quebec Classique" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Quebec Classique" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Quebec Classique" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Quebec Douce</td>
+                <td><input type="checkbox" data-product="Quebec Douce" data-format="20 RG"></td>
+                <td><input type="checkbox" data-product="Quebec Douce" data-format="20 KS"></td>
+                <td><input type="checkbox" data-product="Quebec Douce" data-format="25 RG"></td>
+                <td><input type="checkbox" data-product="Quebec Douce" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Rothmans Régulière</td>
+                <td><input type="checkbox" data-product="Rothmans Régulière" data-format="20 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Régulière" data-format="25 RG"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Rothmans Spéciale</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Spéciale" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Spéciale" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Rothmans Bleue</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Bleue" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Bleue" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Rothmans Argent</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Argent" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Argent" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+            <tr>
+                <td class="product-name">Rothmans Rouge</td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Rouge" data-format="20 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" data-product="Rothmans Rouge" data-format="25 KS"></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+                <td><input type="checkbox" disabled></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    // Met à jour dynamiquement l'affichage de l'adresse courriel selon le site sélectionné
+    function updateEmailAddress() {
+        var select = document.getElementById("siteSelect");
+        var email = select.value;
+        document.getElementById("emailDisplay").innerText = "Courriel associé : " + email;
+    }
+
+    // Décoche l'ensemble des cases à cocher actives
+    function clearAllCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(cb) {
+            if (!cb.disabled) {
+                cb.checked = false;
+            }
+        });
+    }
+
+    // Récupère les éléments cochés, génère le corps du mail et lance le client de messagerie
+    function generateAndSendEmail() {
+        var select = document.getElementById("siteSelect");
+        var siteNumber = select.options[select.selectedIndex].text;
+        var destinationEmail = select.value;
+
+        // Génération de la date courante (format JJ/MM/AAAA)
+        var now = new Date();
+        var dd = String(now.getDate()).padStart(2, '0');
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var yyyy = now.getFullYear();
+        var formattedDate = dd + '/' + mm + '/' + yyyy;
+
+        // Sélectionner toutes les cases cochées
+        var checkedItems = document.querySelectorAll('input[type="checkbox"]:checked');
+        
+        if (checkedItems.length === 0) {
+            alert("Attention : Veuillez sélectionner au moins un produit avant d'envoyer la commande.");
+            return;
+        }
+
+        // Construire la liste des produits commandés
+        var itemsText = "";
+        checkedItems.forEach(function(item) {
+            var pName = item.getAttribute("data-product");
+            var fName = item.getAttribute("data-format");
+            itemsText += "- " + pName + " (" + fName + ")\n";
+        });
+
+        // Préparation du sujet et du corps du courriel
+        var mailSubject = "Commande de produits - Site #" + siteNumber + " - " + formattedDate;
+        var mailBody = "Bonjour,\n\nVoici la liste des produits cochés à commander pour le site #" + siteNumber + " en date du " + formattedDate + " :\n\n" + itemsText + "\nMerci et bonne journée !";
+
+        // Déclenchement de l'envoi via l'application par défaut (Outlook, Thunderbird, Mail, etc.)
+        var mailtoLink = "mailto:" + destinationEmail + 
+                         "?subject=" + encodeURIComponent(mailSubject) + 
+                         "&body=" + encodeURIComponent(mailBody);
+
+        window.location.href = mailtoLink;
+    }
+</script>
+
+</body>
+</html>
