@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bon de Commande Mobile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            margin: 0;
+            padding: 12px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .config-block {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 15px;
+            background-color: #fff;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .email-display {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #0284c7;
+            background: #e0f2fe;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .action-bar {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-send {
+            background-color: #16a34a;
+            color: white;
+        }
+        .btn-send:hover {
+            background-color: #15803d;
+        }
+        .btn-uncheck {
+            background-color: #94a3b8;
+            color: white;
+            padding: 10px;
+            font-size: 13px;
+        }
+        .btn-uncheck:hover {
+            background-color: #64748b;
+        }
+        .manufacturer-title {
+            background-color: #1e293b;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 10px 14px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        /* Style Mobile : Cartes de produits au lieu de lignes de tableau */
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        .product-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        /* Conteneur des boutons de choix pour un produit */
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            gap: 8px;
+        }
+        /* Rendre les checkboxes invisibles mais étirées pour servir de bouton complet */
+        .format-option {
+            position: relative;
+        }
+        .format-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            margin: 0;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        .format-label {
+            display: block;
+            text-align: center;
+            padding: 8px 4px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background-color: #f8fafc;
+            color: #475569;
+            transition: all 0.15s ease;
+        }
+        /* Quand la case est cochée : le bouton devient bleu */
+        .format-option input[type="checkbox"]:checked + .format-label {
+            background-color: #38bdf8;
+            border-color: #0284c7;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        /* Quand le format n'est pas disponible (disabled) */
+        .format-option input[type="checkbox"]:disabled + .format-label {
+            opacity: 0.15;
+            background-color: #e2e8f0;
+            border-color: #e2e8f0;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bon de Commande</h1>
+
+    <div class="config-block">
+        <label for="siteSelect">Numéro de site :</label>
+        <select id="siteSelect" onchange="updateEmailAddress()">
+            <option value="1522@depanneursprint.ca.">1522</option>
+            <option value="1730@depanneursprint.ca">1730</option>
+            <option value="1732@depanneursprint.ca">1732</option>
+            <option value="1733@depanneursprint.ca">1733</option>
+            <option value="1735@depanneursprint.ca">1735</option>
+            <option value="1740@depanneursprint.ca">1740</option>
+            <option value="1745@depanneursprint.ca">1745</option>
+            <option value="1747@depanneursprint.ca">1747</option>
+            <option value="1748@depanneursprint.ca">1748</option>
+            <option value="1752@depanneursprint.ca">1752</option>
+            <option value="1753@depanneursprint.ca">1753</option>
+            <option value="1754@depanneursprint.ca">1754</option>
+            <option value="1755@depanneursprint.ca">1755</option>
+            <option value="1756@depanneursprint.ca">1756</option>
+            <option value="1757@depanneursprint.ca">1757</option>
+            <option value="1758@depanneursprint.ca">1758</option>
+            <option value="1759@depanneursprint.ca">1759</option>
+            <option value="1760@depanneursprint.ca">1760</option>
+            <option value="1761@depanneursprint.ca">1761</option>
+            <option value="1762@depanneursprint.ca">1762</option>
+            <option value="1769@depanneursprint.ca">1769</option>
+            <option value="1771@depanneursprint.ca">1771</option>
+            <option value="1773@depanneursprint.ca">1773</option>
+            <option value="1774@depanneursprint.ca">1774</option>
+            <option value="1775@depanneursprint.ca">1775</option>
+            <option value="1777@depanneursprint.ca">1777</option>
+            <option value="1778@depanneursprint.ca">1778</option>
+            <option value="1780@depanneursprint.ca">1780</option>
+            <option value="1781@depanneursprint.ca">1781</option>
+            <option value="1782@depanneursprint.ca">1782</option>
+            <option value="1783@depanneursprint.ca">1783</option>
+            <option value="1784@depanneursprint.ca">1784</option>
+            <option value="1787@depanneursprint.ca">1787</option>
+            <option value="1789@depanneursprint.ca">1789</option>
+            <option value="1801@depanneursprint.ca">1801</option>
+            <option value="1802@depanneursprint.ca">1802</option>
+            <option value="1803@depanneursprint.ca">1803</option>
+            <option value="1809@depanneursprint.ca">1809</option>
+            <option value="1813@depanneursprint.ca">1813</option>
+            <option value="1816@depanneursprint.ca">1816</option>
+            <option value="1817@depanneursprint.ca">1817</option>
+            <option value="1818@depanneursprint.ca">1818</option>
+            <option value="1819@depanneursprint.ca">1819</option>
+            <option value="1820@depanneursprint.ca">1820</option>
+            <option value="1825@depanneursprint.ca">1825</option>
+            <option value="1826@depanneursprint.ca">1826</option>
+            <option value="1827@depanneursprint.ca">1827</option>
+            <option value="5006@depanneursprint.ca">5006</option>
+            <option value="5013@depanneursprint.ca">5013</option>
+            <option value="5014@depanneursprint.ca">5014</option>
+            <option value="5015@depanneursprint.ca">5015</option>
+            <option value="5016@depanneursprint.ca">5016</option>
+            <option value="5021@depanneursprint.ca">5021</option>
+            <option value="5025@depanneursprint.ca">5025</option>
+            <option value="5026@depanneursprint.ca">5026</option>
+            <option value="5028@depanneursprint.ca">5028</option>
+            <option value="5030@depanneursprint.ca">5030</option>
+            <option value="5032@depanneursprint.ca">5032</option>
+            <option value="5033@depanneursprint.ca">5033</option>
+            <option value="5035@depanneursprint.ca">5035</option>
+            <option value="5041@depanneursprint.ca">5041</option>
+            <option value="5042@depanneursprint.ca">5042</option>
+            <option value="5049@depanneursprint.ca">5049</option>
+            <option value="5060@depanneursprint.ca">5060</option>
+            <option value="5067@depanneursprint.ca">5067</option>
+            <option value="5068@depanneursprint.ca">5068</option>
+            <option value="5069@depanneursprint.ca">5069</option>
+            <option value="5071@depanneursprint.ca">5071</option>
+            <option value="5076@depanneursprint.ca">5076</option>
+            <option value="5077@depanneursprint.ca">5077</option>
+            <option value="5079@depanneursprint.ca">5079</option>
+            <option value="5080@depanneursprint.ca">5080</option>
+            <option value="5082@depanneursprint.ca">5082</option>
+            <option value="5085@depanneursprint.ca">5085</option>
+            <option value="5086@depanneursprint.ca">5086</option>
+            <option value="5090@depanneursprint.ca">5090</option>
+            <option value="5091@depanneursprint.ca">5091</option>
+            <option value="5096@depanneursprint.ca">5096</option>
+            <option value="5460@depanneursprint.ca">5460</option>
+            <option value="5461@depanneursprint.ca">5461</option>
+            <option value="5462@depanneursprint.ca">5462</option>
+            <option value="5463@depanneursprint.ca">5463</option>
+            <option value="5464@depanneursprint.ca">5464</option>
+            <option value="5472@depanneursprint.ca">5472</option>
+            <option value="5474@depanneursprint.ca">5474</option>
+            <option value="5480@depanneursprint.ca">5480</option>
+            <option value="5481@depanneursprint.ca">5481</option>
+            <option value="5483@depanneursprint.ca">5483</option>
+            <option value="5484@depanneursprint.ca">5484</option>
+            <option value="5486@depanneursprint.ca">5486</option>
+            <option value="5487@depanneursprint.ca">5487</option>
+            <option value="5500@depanneursprint.ca">5500</option>
+            <option value="5502@depanneursprint.ca">5502</option>
+            <option value="5504@depanneursprint.ca">5504</option>
+            <option value="5505@depanneursprint.ca">5505</option>
+            <option value="5506@depanneursprint.ca">5506</option>
+            <option value="5507@depanneursprint.ca">5507</option>
+            <option value="5508@depanneursprint.ca">5508</option>
+            <option value="5510@depanneursprint.ca">5510</option>
+            <option value="5511@depanneursprint.ca">5511</option>
+            <option value="5512@depanneursprint.ca">5512</option>
+            <option value="5513@depanneursprint.ca">5513</option>
+            <option value="5515@depanneursprint.ca">5515</option>
+            <option value="5516@depanneursprint.ca">5516</option>
+            <option value="5519@depanneursprint.ca">5519</option>
+            <option value="5521@depanneursprint.ca">5521</option>
+            <option value="5523@depanneursprint.ca">5523</option>
+            <option value="5524@depanneursprint.ca">5524</option>
+            <option value="5526@depanneursprint.ca">5526</option>
+            <option value="5527@depanneursprint.ca">5527</option>
+            <option value="5528@depanneursprint.ca">5528</option>
+            <option value="5529@depanneursprint.ca">5529</option>
+            <option value="5530@depanneursprint.ca">5530</option>
+            <option value="5531@depanneursprint.ca">5531</option>
+            <option value="5532@depanneursprint.ca">5532</option>
+            <option value="5533@depanneursprint.ca">5533</option>
+            <option value="5534@depanneursprint.ca">5534</option>
+            <option value="5535@depanneursprint.ca">5535</option>
+            <option value="5536@depanneursprint.ca">5536</option>
+            <option value="5537@depanneursprint.ca">5537</option>
+            <option value="5538@depanneursprint.ca">5538</option>
+            <option value="5539@depanneursprint.ca">5539</option>
+            <option value="5540@depanneursprint.ca">5540</option>
+            <option value="5541@depanneursprint.ca">5541</option>
+            <option value="dbolduc@groupefdufresne.ca">TEST</option>
+        </select>
+        <div class="email-display" id="emailDisplay">Courriel associé : 1522@depanneursprint.ca</div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn-send" onclick="generateAndSendEmail()">Envoyer la commande</button>
+        <button class="btn-uncheck" onclick="clearAllCheckboxes()">Tout décocher</button>
+    </div>
+
+    <div class="manufacturer-title">ITL</div>
+    <div id="section-ITL"></div>
+
+    <div class="manufacturer-title">JTI</div>
+    <div id="section-JTI"></div>
+
+    <div class="manufacturer-title">RBH</div>
+    <div id="section-RBH"></div>
+
+</div>
+
+<script>
+    // Liste complète brute des produits générée à partir de vos fichiers pour la vue mobile adaptative
+    const productsData = [
+        // ITL
+        { mfg: "ITL", name: "du Maurier Distinct Plus", formats: { "20 KS": true, "25 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "du Maurier Distinct", formats: { "20 RG": true, "25 RG": true, "50 RG": true } },
+        { mfg: "ITL", name: "du Maurier Signature", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "du Maurier Subtil", formats: { "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "du Maurier Velouté", formats: { "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "John Player Québec", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 RG": true, "40 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "John Player Riche", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 RG": true, "40 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "John Player Velouté", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "Marlboro", formats: { "20 KS": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Marlboro Original", formats: { "20 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Marlboro Plus", formats: { "25 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Marlboro Riche", formats: { "20 KS": true, "25 RG": true, "25 KS": true, "40 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "Marlboro Sélect", formats: { "20 KS": true, "25 RG": true, "25 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "Marlboro Velouté", formats: { "20 KS": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Matinée", formats: { "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "Matinée Subtile", formats: { "40 KS": true } },
+        { mfg: "ITL", name: "Matinée Veloutée", formats: { "40 KS": true } },
+        { mfg: "ITL", name: "Pall Mall Corsée Extra", formats: { "20 KS": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Pall Mall Corsée", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "ITL", name: "Pall Mall Originale", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Pall Mall Veloutée Extra", formats: { "20 KS": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Pall Mall Veloutée", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 KS": true, "50 KS": true } },
+        { mfg: "ITL", name: "Player's Original", formats: { "20 RG": true, "25 RG": true } },
+        { mfg: "ITL", name: "Player's Riche", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "Player's Velouté", formats: { "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "Viceroy Original", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "ITL", name: "Viceroy Velouté", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        
+        // JTI
+        { mfg: "JTI", name: "American Spirit", formats: { "20 KS": true } },
+        { mfg: "JTI", name: "American Spirit Corsé", formats: { "20 KS": true } },
+        { mfg: "JTI", name: "Camel Original", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "JTI", name: "Camel Velouté", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "JTI", name: "Camel Sélect", formats: { "25 KS": true } },
+        { mfg: "JTI", name: "Camel Riche", formats: { "25 KS": true } },
+        { mfg: "JTI", name: "Winston Original", formats: { "20 KS": true } },
+        { mfg: "JTI", name: "Export A Plein", formats: { "20 RG": true, "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "Export A Medium", formats: { "20 RG": true, "25 RG": true, "25 KS": true, "50 RG": true } },
+        { mfg: "JTI", name: "Export A Velouté", formats: { "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "Export A Fin", formats: { "25 RG": true } },
+        { mfg: "JTI", name: "Macdonald Subtil", formats: { "25 KS": true } },
+        { mfg: "JTI", name: "Macdonald Original", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "40 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "JTI", name: "Macdonald Velouté", formats: { "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "Macdonald Medium", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "LD Standard Corsé", formats: { "20 KS": true, "25 RG": true, "25 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "JTI", name: "LD Standard Medium", formats: { "25 KS": true, "50 KS": true } },
+        { mfg: "JTI", name: "LD Corsé", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "LD Medium", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "JTI", name: "LD Menthol", formats: { "20 KS": true, "25 KS": true } },
+
+        // RBH
+        { mfg: "RBH", name: "Belvedere Extra Plus", formats: { "25 KS": true } },
+        { mfg: "RBH", name: "Benson & Hedges Noir", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Benson & Hedges Argent", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Benson & Hedges Classique", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Benson & Hedges Or", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Canadian Classics Argent", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Canadian Classics Original", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Next Bleu", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "RBH", name: "Next Rouge", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true, "50 RG": true, "50 KS": true } },
+        { mfg: "RBH", name: "Next Doré", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Philip Morris Bleu", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Philip Morris Spécial", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Quebec Classique", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Quebec Douce", formats: { "20 RG": true, "20 KS": true, "25 RG": true, "25 KS": true } },
+        { mfg: "RBH", name: "Rothmans Régulière", formats: { "20 RG": true, "25 RG": true } },
+        { mfg: "RBH", name: "Rothmans Spéciale", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Rothmans Bleue", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Rothmans Argent", formats: { "20 KS": true, "25 KS": true } },
+        { mfg: "RBH", name: "Rothmans Rouge", formats: { "20 KS": true, "25 KS": true } }
+    ];
+
+    const allPossibleFormats = ["20 RG", "20 KS", "25 RG", "25 KS", "40 RG", "40 KS", "50 RG", "50 KS"];
+
+    // Génération dynamique de l'interface mobile
+    function buildMobileInterface() {
+        productsData.forEach((product, idx) => {
+            const section = document.getElementById(`section-${product.mfg}`);
+            if (!section) return;
+
+            const card = document.createElement("div");
+            card.className = "product-card";
+
+            const nameDiv = document.createElement("div");
+            nameDiv.className = "product-name";
+            nameDiv.innerText = product.name;
+            card.appendChild(nameDiv);
+
+            const grid = document.createElement("div");
+            grid.className = "formats-grid";
+
+            allPossibleFormats.forEach(format => {
+                const isAvailable = !!product.formats[format];
+                
+                const optionDiv = document.createElement("div");
+                optionDiv.className = "format-option";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.setAttribute("data-product", product.name);
+                checkbox.setAttribute("data-format", format);
+                if (!isAvailable) checkbox.disabled = true;
+
+                const label = document.createElement("label");
+                label.className = "format-label";
+                label.innerText = format;
+
+                optionDiv.appendChild(checkbox);
+                optionDiv.appendChild(label);
+                grid.appendChild(optionDiv);
+            });
+
+            card.appendChild(grid);
+            section.appendChild(card);
+        });
+        updateEmailAddress();
+    }
+
+    function updateEmailAddress() {
+        var select = document.getElementById("siteSelect");
+        var email = select.value;
+        // Supprime le point final s'il existe (correctif pour le site 1522)
+        if (email.endsWith('.')) {
+            email = email.slice(0, -1);
+        }
+        document.getElementById("emailDisplay").innerText = "Courriel associé : " + email;
+    }
+
+    function clearAllCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(cb) {
+            if (!cb.disabled) cb.checked = false;
+        });
+    }
+
+    function generateAndSendEmail() {
+        var select = document.getElementById("siteSelect");
+        var siteNumber = select.options[select.selectedIndex].text;
+        var destinationEmail = select.value;
+
+        // Nettoyage automatique du point final pour éviter un rejet d'envoi
+        if (destinationEmail.endsWith('.')) {
+            destinationEmail = destinationEmail.slice(0, -1);
+        }
+
+        var now = new Date();
+        var dd = String(now.getDate()).padStart(2, '0');
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var yyyy = now.getFullYear();
+        var formattedDate = dd + '/' + mm + '/' + yyyy;
+
+        var checkedItems = document.querySelectorAll('input[type="checkbox"]:checked');
+        
+        if (checkedItems.length === 0) {
+            alert("Attention : Veuillez sélectionner au moins un produit avant d'envoyer la commande.");
+            return;
+        }
+
+        var itemsText = "";
+        checkedItems.forEach(function(item) {
+            var pName = item.getAttribute("data-product");
+            var fName = item.getAttribute("data-format");
+            itemsText += "- " + pName + " (" + fName + ")\n";
+        });
+
+        var mailSubject = "Commande de produits - Site #" + siteNumber + " - " + formattedDate;
+        var mailBody = "Bonjour,\n\nVoici la liste des produits cochés à commander pour le site #" + siteNumber + " en date du " + formattedDate + " :\n\n" + itemsText + "\nMerkxi et bonne journée !";
+
+        var mailtoLink = "mailto:" + destinationEmail + 
+                         "?subject=" + encodeURIComponent(mailSubject) + 
+                         "&body=" + encodeURIComponent(mailBody);
+
+        window.location.href = mailtoLink;
+    }
+
+    // Lancer la construction de l'interface au chargement
+    window.onload = buildMobileInterface;
+</script>
+
+</body>
+</html>
